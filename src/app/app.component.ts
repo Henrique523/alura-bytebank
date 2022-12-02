@@ -9,13 +9,10 @@ import {Transferencia} from "./interfaces/Transferencia";
 })
 export class AppComponent {
   title = 'angular-bytebank';
-  transferencia: Transferencia = {
-    destino: 0,
-    valor: 0,
-  };
+  transferencias: Transferencia[] = [];
 
   transferir($event: Transferencia) {
     console.log($event);
-    this.transferencia = $event;
+    this.transferencias.push({...$event, data: new Date(Date.now())});
   }
 }

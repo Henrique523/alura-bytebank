@@ -1,5 +1,6 @@
 export interface Transferencia {
+  id: string;
   valor: number;
-  destino: number;
-  data?: Date;
+  destino: string | number;
+  data: Date;
 }

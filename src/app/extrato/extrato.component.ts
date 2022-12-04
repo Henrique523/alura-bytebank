@@ -10,14 +10,18 @@ import {TransferenciaService} from "../services/transferencia.service";
 })
 export class ExtratoComponent implements OnInit {
   // @ts-ignore
-  transferencias: Transferencia[];
+  transferencias: Transferencia[] = [];
 
   constructor(
     private transferenciaService: TransferenciaService
   ) {}
 
   ngOnInit(): void {
-    this.transferencias = this.transferenciaService.transferencias;
+    this.transferenciaService.todas().subscribe(
+      (transferencias) => {
+        console.table(transferencias);
+        this.transferencias = transferencias;
+      }
+    );
   }
-
 }

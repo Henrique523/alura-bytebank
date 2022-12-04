@@ -1,12 +1,18 @@
 import { Injectable } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+
 import {Transferencia} from "../interfaces/Transferencia";
+import {environment} from "../../environments/environment";
+import {Observable} from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class TransferenciaService {
 
   _transferencia: Transferencia[];
 
-  constructor() {
+  constructor(
+    private http: HttpClient
+  ) {
     this._transferencia = [];
   }
 
@@ -14,9 +20,13 @@ export class TransferenciaService {
     return this._transferencia;
   }
 
-  adicionar(transferencia: Transferencia) {
+  todas() {
+    return this.http.get<Transferencia[]>(environment.backendUrl);
+  }
+
+  adicionar(transferencia: Transferencia): Observable<Transferencia> {
     this.hidrate(transferencia);
-    this._transferencia.push(transferencia);
+    return this.http.post<Transferencia>(environment.backendUrl, transferencia);
   }
 
   private hidrate(transferencia: Transferencia) {
